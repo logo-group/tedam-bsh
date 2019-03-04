@@ -2189,9 +2189,25 @@ public class CommonBsh {
 			su.log(headerReportTest, "reportName : " + reportName, logLevelInfo, printLog);
 			su.log(headerReportTest, " The TPW.executePDFReport () routine is being called.... Report name : " + reportName, logLevelInfo, printLog);
 			su.log(headerReportTest, " printFilter : " + isWriteFilters, logLevelInfo, printLog);
+			long executePDFReportStartTime = System.currentTimeMillis();
+			boolean exitLoop = false;
 			TPW.executePDFReport(reportName, null, 0, 0, reportFileName + Constants.FILE_EXTENSION_FLT, isWriteFilters);
 			su.log(headerReportTest, reportWaitSleepMillis + " Wait for seconds", logLevelInfo, printLog);
-			Thread.sleep(reportWaitSleepMillis.longValue());
+			while (!exitLoop) {
+				if (new File(targetTemporaryReportFilePathString + Constants.FILE_EXTENSION_PDF).exists()) {
+					exitLoop = true;
+					su.log(headerReportTest, " EXITLOOP : File created and found.", logLevelInfo, printLog);
+				} else {
+					exitLoop = (System.currentTimeMillis() - executePDFReportStartTime) > reportWaitSleepMillis
+							.longValue();
+					if (!exitLoop) {
+						Thread.sleep(1000);
+					} else {
+						su.log(headerReportTest, " EXITLOOP : Time out and file not found.", logLevelInfo, printLog);
+					}
+				}
+			}
+			Thread.sleep(10000);
 			if (!new File(targetTemporaryReportFilePathString + Constants.FILE_EXTENSION_PDF).exists()) {
 				su.log(headerReportTest,
 						"targetReportFilePathString : " + targetTemporaryReportFilePathString
