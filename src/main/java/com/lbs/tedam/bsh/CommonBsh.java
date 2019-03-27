@@ -1296,6 +1296,7 @@ public class CommonBsh {
 	}
 
 	public void gridSearch(JLbsScriptContainer form, Integer gridStrTag, String gridSearchParameter) throws Exception {
+		Thread.sleep(3000);
 		String headerGridSearch = "GRIDSEARCHNG.BSH";
 		// The console starts stepping to print.
 		su.log(headerGridSearch, "STEP STARTED.", logLevelInfo, printLog);
@@ -1335,6 +1336,7 @@ public class CommonBsh {
 				su.log(headerGridSearch, "getScriptGridByTag(gridTag :" + gridTag + ")", logLevelInfo, printLog);
 				grid = (JLbsScriptGrid) form.getScriptGridByTag(gridTag.intValue());
 				grid.select();
+				su.log(headerGridSearch, "Grid row count = " + grid.getRowCount(), logLevelInfo, printLog);
 				// f4 The command to open the menu.
 				su.log(headerGridSearch, "f4 The command to open the menu.", logLevelInfo, printLog);
 				grid.showSearchRow();
@@ -1501,6 +1503,7 @@ public class CommonBsh {
 			boolean isValuesMatches = false; // matching control of values.
 			int snapshotCount = 1; // Snapshot is the step parameter.
 			if (verifyType.equals(Constants.OPERATION_ROWCOUNTVERIFY_BSH)) {
+				Thread.sleep(3000);
 				su.log(headerVerify, "case :" + Constants.OPERATION_ROWCOUNTVERIFY_BSH, logLevelInfo, printLog);
 				// Grid row count verification
 				long startTime = System.currentTimeMillis(); // start time.
@@ -1520,6 +1523,7 @@ public class CommonBsh {
 							logLevelInfo, printLog);
 
 					// do the values match?
+					su.log(headerVerify, "Grid row count = " + grid.getRowCount(), logLevelInfo, printLog);
 					isValuesMatches = grid.getRowCount() == (Integer.valueOf(paramMap.get("rowCount").toString())).intValue();
 					// added control to prevent waiting in the last positive step.
 
