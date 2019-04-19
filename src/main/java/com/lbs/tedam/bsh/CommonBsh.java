@@ -1339,9 +1339,10 @@ public class CommonBsh {
 				su.log(headerGridSearch, "Grid row count = " + grid.getRowCount(), logLevelInfo, printLog);
 				// f4 The command to open the menu.
 				su.log(headerGridSearch, "f4 The command to open the menu.", logLevelInfo, printLog);
+				grid.hideSearchRow();
 				grid.showSearchRow();
 				// f4 The command to open the menu.
-				grid.keyPressed(115);
+//				grid.keyPressed(115);
 				// at this point we find the index of the column we will search.
 				su.log(headerGridSearch, "at this point we find the index of the column we will search.", logLevelInfo, printLog);
 				int columnIndex = grid.findColumnIndex(tag);
